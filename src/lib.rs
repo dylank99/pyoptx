@@ -4,5 +4,6 @@
 //! unit-tested directly with `cargo test`. PyO3 bindings are added later behind
 //! the `extension-module` feature and exposed to Python as `pyoptx._core`.
 
+pub mod black_scholes;
 pub mod distributions;
 pub mod error;
