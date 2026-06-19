@@ -1,0 +1,32 @@
+[package]
+name = "pyoptx_core"
+version = "0.1.0"
+edition = "2021"
+description = "Fast options pricing and risk core (Black-Scholes, binomial trees, Monte Carlo) for the pyoptx Python library."
+license = "MIT"
+repository = "https://github.com/dylank99/pyoptx"
+readme = "README.md"
+
+[lib]
+# Rust crate is `pyoptx_core`; maturin renames the cdylib to the Python module
+# `pyoptx._core` (see [tool.maturin] in pyproject.toml). The rlib is kept so
+# `cargo test` can build a normal test harness against the pure-Rust math.
+name = "pyoptx_core"
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+# PyO3 is an *optional* dependency, enabled only through the `extension-module`
+# feature. This keeps `cargo test` completely free of any libpython linkage:
+# the numerical code is pure Rust and is tested without Python in the loop.
+pyo3 = { version = "0.23", optional = true }
+rand = "0.8"
+rand_distr = "0.4"
+
+[features]
+default = []
+# Enabled by maturin when building the Python extension module.
+extension-module = ["dep:pyo3", "pyo3/extension-module"]
+
+[profile.release]
+lto = true
+codegen-units = 1
