@@ -8,4 +8,5 @@ pub mod binomial;
 pub mod black_scholes;
 pub mod distributions;
 pub mod error;
+pub mod implied_vol;
 pub mod monte_carlo;
